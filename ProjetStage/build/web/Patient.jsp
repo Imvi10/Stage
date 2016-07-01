@@ -84,12 +84,14 @@
             );
         }
 
-        function getCentreByAuthor() {
+        function getCentreByAuthor(event) {
             author = document.getElementById("author").value;
+            event.preventDefault();
             $.ajax(
                     {
                         type: "post",
                         url: "consults/consultCentreByAuthor.jsp",
+                        
                         data: {
                             author: author
                         },
@@ -103,7 +105,7 @@
             );
         }
 
-        function validDataPatient() {
+        function validDataPatient(event) {
             author = document.getElementById("author").value;
             codePatient = document.getElementById("codePatient").value;
             idProtocol = document.getElementById("protocol").value;
@@ -340,7 +342,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="athor">Author</label>
                                     <div class="col-md-4">
-                                        <select id="author" name="author" required="true" class="form-control" onchange="getCentreByAuthor();" >
+                                        <select id="author" name="author" required="true" class="form-control" onchange="getCentreByAuthor(event);" >
                                             <option value='-1'>------</option>
                                         </select>
                                     </div>
@@ -360,7 +362,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="btnGenerate"></label>
                                     <div class="col-md-4">
-                                        <button id="btnGenerate" name="btnGenerate" onclick="validDataPatient()" class="btn btn-success">Generate</button>
+                                        <button id="btnGenerate" name="btnGenerate" onclick="validDataPatient(event)" class="btn btn-success">Generate</button>
                                     </div>
                                 </div>
 

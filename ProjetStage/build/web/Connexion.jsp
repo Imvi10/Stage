@@ -43,7 +43,7 @@ and open the template in the editor.
                 port = document.getElementById("port").value;
                 usr = document.getElementById("usr").value;
                 pswd = document.getElementById("pswd").value;
-                event.preventDefault();
+               // event.preventDefault();
 
                 $.ajax(
                         {
@@ -77,7 +77,7 @@ and open the template in the editor.
                 usr = document.getElementById("usr").value;
                 pswd = document.getElementById("pswd").value;
                 db = document.getElementById("db").value;
-                event.preventDefault();
+                //event.preventDefault();
 
                 $.ajax(
                         {
@@ -101,14 +101,13 @@ and open the template in the editor.
                 );
             }
 
-            function login() {
+            function login(event) {
                 ipServer = document.getElementById("ipServer").value;
                 port = document.getElementById("port").value;
                 usr = document.getElementById("usr").value;
                 pswd = document.getElementById("pswd").value;
                 db = document.getElementById("db").value;
                 event.preventDefault();
-
                 $.ajax(
                         {
                             type: "post",
@@ -121,6 +120,7 @@ and open the template in the editor.
                                 db: db
                             },
                             context: document.body
+                            
                         }
                 ).done(
                         function (data) {
@@ -256,7 +256,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="btnTestConnection"></label>
                                         <div class="col-md-4">
-                                            <button id="btnConnect" name="btnConnect" class="btn btn-success" onclick="login()" >Connexion</button>
+                                            <button id="btnConnect" name="btnConnect" class="btn btn-success" onclick="login(event)" >Connexion</button>
                                         </div>
                                     </div>
 

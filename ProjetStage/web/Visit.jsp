@@ -121,7 +121,7 @@
                 }
             }
 
-            function validDataVisit() {
+            function validDataVisit(event) {
                 author = document.getElementById("author").value;
                 codePatient = document.getElementById("codePatient").value;
                 typeVisit = document.getElementById("typeVisit").value;
@@ -356,7 +356,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="btnGenerate"></label>
                                         <div class="col-md-4">
-                                            <button id="btnGenerate" name="btnGenerate" onclick="validDataVisit()" class="btn btn-success">Generate</button>
+                                            <button id="btnGenerate" name="btnGenerate" onclick="validDataVisit(event)" class="btn btn-success">Generate</button>
                                         </div>
                                     </div>
 
