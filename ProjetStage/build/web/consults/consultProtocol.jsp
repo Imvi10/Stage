@@ -4,7 +4,14 @@
     Author     : ivl
 --%>
 <%@page import="com.keosys.dataGen.bussines.Protocol"%>
-<%
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1 
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server 
+%>
+<% 
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1 
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server
     Protocol lesProtocols = null;
     lesProtocols = new Protocol();
     out.print("<option value='-1'>------</option>");

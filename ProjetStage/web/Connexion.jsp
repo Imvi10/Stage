@@ -4,6 +4,10 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<% response.setHeader("Cache-Control","no-cache"); //HTTP 1.1 
+ response.setHeader("Pragma","no-cache"); //HTTP 1.0 
+ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  
+%>
 <html>
     <head>
         <title>Data Generator</title>
@@ -26,7 +30,7 @@ and open the template in the editor.
                 usr = document.getElementById("usr").value;
                 pswd = document.getElementById("pswd").value;
                 db = document.getElementById("db").value;
-                event.preventDefault();
+                //event.preventDefault();
                 if (ipServer === "" || port === "" || usr === "" || pswd === "") {
                     document.getElementById("db").value = "-1";
                     console.log("log : All the inputs are not filled");

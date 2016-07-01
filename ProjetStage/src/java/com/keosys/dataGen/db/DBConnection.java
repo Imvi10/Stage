@@ -72,6 +72,7 @@ public class DBConnection {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             connection = DriverManager.getConnection(url, username, password);
             connection.close();
+            connection = null;
             return true;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
             Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, "La connection a échoué, il faut verifier le Driver MYSQL ");
@@ -89,6 +90,7 @@ public class DBConnection {
      */
     public void closeConnection() throws SQLException {
         connection2.close();
+        connection2 = null;
     }
 
     /**
@@ -135,13 +137,11 @@ public class DBConnection {
      */
     public String[] getDatabases(String ipServer, int port, String user, String pass) throws SQLException {
         String url = "jdbc:mysql://" + ipServer + ":" + port + "";
-        String username = user;
-        String password = pass;
         String[] tableNames = null;
         Connection cnx;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            cnx = DriverManager.getConnection(url, username, password);
+            cnx = DriverManager.getConnection(url, user, pass);
             stm = (Statement) cnx.createStatement();
             rs = stm.executeQuery("SHOW DATABASES");
             tableNames = new String[getResultSetRowCount(rs)];
@@ -151,10 +151,11 @@ public class DBConnection {
                 i++;
             }
             closeResulsetStatement();
-            connection.close();
+            cnx.close();
+            cnx = null;        
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
             Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, "La connection a échoué, il faut verifier le Driver MYSQL ");
-            Logger.getLogger(Patient.class.getName()).log(Level.SEVERE.SEVERE, null, e);
+            Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, null, e);
         }
 
         return tableNames;
@@ -213,6 +214,7 @@ public class DBConnection {
      */
     public Protocol[] getProtocols() throws SQLException {
         stm = (Statement) connection2.createStatement();
+        
         rs = stm.executeQuery("SELECT id,code FROM protocol");
         lesProtocols = new Protocol[getResultSetRowCount(rs)];
         int i = 0;
