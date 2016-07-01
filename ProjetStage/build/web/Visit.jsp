@@ -3,6 +3,10 @@
     Created on : 3 juin 2016, 10:57:45
     Author     : ivl
 --%>
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1 
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server 
+%>
 <%@page import="com.keosys.dataGen.bussines.TypeVisit"%>
 <%@page import="com.keosys.dataGen.bussines.Patient"%>
 <%@page import="com.keosys.dataGen.bussines.User"%>

@@ -6,7 +6,10 @@
 <%@page import="com.keosys.dataGen.bussines.TypeVisit" %>
 <%@page import="com.keosys.dataGen.bean.InfoType" %>
 
-
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1 
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server 
+%>
 <%
     com.keosys.dataGen.bussines.TypeVisit typeVisitBussines = new com.keosys.dataGen.bussines.TypeVisit();
     com.keosys.dataGen.bean.TypeVisit[] lesTypesVisite;
