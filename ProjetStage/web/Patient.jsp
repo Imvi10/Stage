@@ -113,11 +113,11 @@
             if (codePatient === "" || idProtocol === "-1" || author === "-1") {
                 alert("ERREUR : Il faut au moins saisir le code patient, l'author et le protocol");
             } else {
-                verifyPatientNotExists();
+                verifyPatientNotExists(event);
             }
         }
 
-        function verifyPatientNotExists() {
+        function verifyPatientNotExists(event) {
             codePatient = document.getElementById("codePatient").value;
             $.ajax(
                     {

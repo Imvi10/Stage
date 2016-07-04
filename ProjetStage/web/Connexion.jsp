@@ -4,9 +4,9 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<% response.setHeader("Cache-Control","no-cache"); //HTTP 1.1 
- response.setHeader("Pragma","no-cache"); //HTTP 1.0 
- response.setDateHeader ("Expires", 0); //prevents caching at the proxy server  
+<% response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1 
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server  
 %>
 <html>
     <head>
@@ -24,26 +24,45 @@ and open the template in the editor.
 
         <script type="text/javascript">
 
-            function validData() {
+            function validData(event) {
                 ipServer = document.getElementById("ipServer").value;
                 port = document.getElementById("port").value;
                 usr = document.getElementById("usr").value;
                 pswd = document.getElementById("pswd").value;
                 db = document.getElementById("db").value;
-                //event.preventDefault();
+                event.preventDefault();
                 if (ipServer === "" || port === "" || usr === "" || pswd === "") {
                     document.getElementById("db").value = "-1";
                     console.log("log : All the inputs are not filled");
                 } else {
-                    checkConnection();
+                    checkConnection(event);
                 }
             }
-            function checkConnection() {
+
+
+            function validDataClick(event) {
                 ipServer = document.getElementById("ipServer").value;
                 port = document.getElementById("port").value;
                 usr = document.getElementById("usr").value;
                 pswd = document.getElementById("pswd").value;
-               // event.preventDefault();
+                db = document.getElementById("db").value;
+                event.preventDefault();
+                if (ipServer === "" || port === "" || usr === "" || pswd === "") {
+                    alert("ERREUR : Il faut remplir tous les champs de connexion");
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            function checkConnection(event) {
+
+                ipServer = document.getElementById("ipServer").value;
+                port = document.getElementById("port").value;
+                usr = document.getElementById("usr").value;
+                pswd = document.getElementById("pswd").value;
+                event.preventDefault();
 
                 $.ajax(
                         {
@@ -71,13 +90,13 @@ and open the template in the editor.
                 document.getElementById("db").value = "";
             }
 
-            function modifyDatabaseProperties() {
+            function modifyDatabaseProperties(event) {
                 ipServer = document.getElementById("ipServer").value;
                 port = document.getElementById("port").value;
                 usr = document.getElementById("usr").value;
                 pswd = document.getElementById("pswd").value;
                 db = document.getElementById("db").value;
-                //event.preventDefault();
+                event.preventDefault();
 
                 $.ajax(
                         {
@@ -102,33 +121,37 @@ and open the template in the editor.
             }
 
             function login(event) {
-                ipServer = document.getElementById("ipServer").value;
-                port = document.getElementById("port").value;
-                usr = document.getElementById("usr").value;
-                pswd = document.getElementById("pswd").value;
-                db = document.getElementById("db").value;
-                event.preventDefault();
-                $.ajax(
-                        {
-                            type: "post",
-                            url: "stabConnection.jsp",
-                            data: {
-                                ipServer: ipServer,
-                                port: port,
-                                usr: usr,
-                                pswd: pswd,
-                                db: db
-                            },
-                            context: document.body
-                            
-                        }
-                ).done(
-                        function (data) {
-                            if (alertByResult(data)) {
-                                modifyDatabaseProperties();
+                if (validDataClick(event) === true) {
+                    event.preventDefault();
+                } else {
+                    ipServer = document.getElementById("ipServer").value;
+                    port = document.getElementById("port").value;
+                    usr = document.getElementById("usr").value;
+                    pswd = document.getElementById("pswd").value;
+                    db = document.getElementById("db").value;
+                    event.preventDefault();
+                    $.ajax(
+                            {
+                                type: "post",
+                                url: "stabConnection.jsp",
+                                data: {
+                                    ipServer: ipServer,
+                                    port: port,
+                                    usr: usr,
+                                    pswd: pswd,
+                                    db: db
+                                },
+                                context: document.body
+
                             }
-                        }
-                );
+                    ).done(
+                            function (data) {
+                                if (alertByResult(data)) {
+                                    modifyDatabaseProperties(event);
+                                }
+                            }
+                    );
+                }
             }
 
             function alertByResult(data) {
@@ -146,8 +169,8 @@ and open the template in the editor.
                     $.notiny({text: message});
                 });
             }
-            
-             function verificationSucces(data) {
+
+            function verificationSucces(data) {
                 if (data.indexOf("ERREUR") === -1) {
                     alerteSucces(data);
                     return true;
@@ -213,7 +236,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="ipServer">Ip Serveur</label>  
                                         <div class="col-md-4">
-                                            <input id="ipServer" name="ipServer" placeholder="Ip Serveur" class="form-control input-md" required="" type="text" onchange="validData()">
+                                            <input id="ipServer" name="ipServer" placeholder="Ip Serveur" class="form-control input-md" required="" type="text" onchange="validData(event)">
                                             <span class="help-block">Ex: 192.168.1.1</span>  
                                         </div>
                                     </div>
@@ -221,7 +244,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="port">Port</label>  
                                         <div class="col-md-4">
-                                            <input id="port" name="port" placeholder="Port" class="form-control input-md" required="" type="number" onchange="validData()">
+                                            <input id="port" name="port" placeholder="Port" class="form-control input-md" required="" type="number" onchange="validData(event)">
                                             <span class="help-block">EX: 3306</span>  
                                         </div>
                                     </div>
@@ -229,7 +252,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="usr">Utilisateur</label>  
                                         <div class="col-md-4">
-                                            <input id="usr" name="usr" placeholder="Utilisateur" class="form-control input-md" required="" type="text" onchange="validData()">
+                                            <input id="usr" name="usr" placeholder="Utilisateur" class="form-control input-md" required="" type="text" onchange="validData(event)">
                                             <span class="help-block">Ex: root</span>  
                                         </div>
                                     </div>
@@ -238,7 +261,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="pswd">Mot de passe</label>
                                         <div class="col-md-4">
-                                            <input id="pswd" name="pswd" placeholder="Mot de passe " class="form-control input-md" type="password" onchange="validData()">
+                                            <input id="pswd" name="pswd" placeholder="Mot de passe " class="form-control input-md" type="password" onchange="validData(event)">
 
                                         </div>
                                     </div>
